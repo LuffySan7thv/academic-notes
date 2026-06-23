@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جزوه های{{ course.name }}</title>
+</head>
+<body>
+    <h1>جزوه های🧾🌼{{course.name}}</h1>
+    <ul>
+        {% for note in notes %}
+            <li>{{note.title}}</li>
+        {% empty %}
+            <li>هیچ جزوه ای هوز ثبت نشده🧐🕸️</li>
+        {% endfor %}
+    </ul>
+    <a href="/">بازگشت به لیست درسها➡️</a>
+</body>
+</html>

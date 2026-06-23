@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 👩‍🎓درسهای من👩‍💻</title>
+</head>
+<body>
+    <div>
+        {% if user.is_authenticated %}
+            <span>خوش اومدید🤗🎉✨{{ user.username }}</span>
+            <a href="{% url 'logout' %}">خروج</a>
+        {% else %}
+            <a href="{% url 'login' %}">ورود</a> |
+            <a href="{% url 'register' %}">ثبت نام✨🎉</a>
+        {% endif %}
+    </div>
+
+    <h1>🧾لیست دروس من📚</h1>
+    <ul>
+        {% for course in courses %}
+            <li><a href="{% url 'note_list' course.id%}">{{ course.name }}</a></li>
+        {% empty %}
+            <li>درسی ثبت نشده🗿🍃</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
