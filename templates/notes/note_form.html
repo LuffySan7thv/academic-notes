@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>افزودن جزوه جدید</title>
+</head>
+<body>
+    <h2>📄➕ افزودن جزوه برای {{ course.name }}</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">⬇️🎉 ذخیره</button>
+    </form>
+    <br>
+    <a href="{% url 'note_list' course.id %}">🔙 بازگشت به جزوه‌ها</a>
+</body>
+</html>

@@ -17,7 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
-from notes.views import course_list, note_list, register
+from notes.views import course_list, note_list, register,note_create,course_create
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +28,8 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('login/',LoginView.as_view(template_name='notes/login.html'), name='login'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
+    path('course/<int:course_id>/note/create/', note_create,name='note_create'),
+    path('course/create/',course_create, name='course_create')
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

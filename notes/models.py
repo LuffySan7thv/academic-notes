@@ -12,7 +12,8 @@ class Course(models.Model):
 class Note(models.Model):
         course = models.ForeignKey(Course, on_delete=models.CASCADE)
         title = models.CharField(max_length=200)
-        content = models.TextField()
+        content = models.TextField(blank=True, null=True)
+        file = models.FileField(upload_to='notes/files/', blank=True, null=True)
         created_at = models.DateTimeField(auto_now_add=True)
 
         def __str__(self):

@@ -9,11 +9,23 @@
     <h1>جزوه های🧾🌼{{course.name}}</h1>
     <ul>
         {% for note in notes %}
-            <li>{{note.title}}</li>
+            <li>
+                {{note.title}}
+                {% if note.file %}
+                    - <a href="{{ note.file.url }}" target="_blank">مشاهده فایل🤗</a>
+                    (<a href="{{ note.file.url }}" download>دانلود⬇️</a>)
+                {% endif %}
+            </li>
         {% empty %}
             <li>هیچ جزوه ای هوز ثبت نشده🧐🕸️</li>
         {% endfor %}
     </ul>
+
+    <br>
+    {% if user.is_authenticated %}
+    <a href="{% url 'note_create' course.id %}">افزودن جزوه جدید➕📚</a>
+    {% endif %}
+    <br>
     <a href="/">بازگشت به لیست درسها➡️</a>
 </body>
 </html>

@@ -17,9 +17,14 @@
     </div>
 
     <h1>🧾لیست دروس من📚</h1>
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'course_create' %}">افزودن درس جدید➕📚</a>
+    {% endif %}
+
     <ul>
         {% for course in courses %}
-            <li><a href="{% url 'note_list' course.id%}">{{ course.name }}</a></li>
+            <li><a href="{% url 'note_list' course.id %}">{{ course.name }}</a></li>
         {% empty %}
             <li>درسی ثبت نشده🗿🍃</li>
         {% endfor %}
