@@ -19,7 +19,8 @@ def register(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            return redirect('login')
+            auth_login(request,user)
+            return redirect('course_list')
     
     else:
         form = RegisterForm()

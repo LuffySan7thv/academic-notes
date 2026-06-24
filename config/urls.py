@@ -25,5 +25,5 @@ urlpatterns = [
     path('course/<int:course_id>/', note_list, name='note_list'),
     path('register/', register, name='register'),
     path('login/',LoginView.as_view(template_name='notes/login.html'), name='login'),
-    path('logout/', LoginView.as_view(next_page='login'), name='logout'),
+    path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
 ]
