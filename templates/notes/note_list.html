@@ -15,6 +15,7 @@
                     - <a href="{{ note.file.url }}" target="_blank">مشاهده فایل🤗</a>
                     (<a href="{{ note.file.url }}" download>دانلود⬇️</a>)
                 {% endif %}
+                <a href="{% url 'note_delete' note.id %}" style="color:red;margin-left:10px;">حذف جزوه❌</a>
             </li>
         {% empty %}
             <li>هیچ جزوه ای هوز ثبت نشده🧐🕸️</li>

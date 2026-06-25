@@ -24,7 +24,10 @@
 
     <ul>
         {% for course in courses %}
-            <li><a href="{% url 'note_list' course.id %}">{{ course.name }}</a></li>
+            <li>
+                <a href="{% url 'note_list' course.id %}">{{ course.name }}</a>
+                <a href="{% url 'course_delete' course.id %}"style="color: red; margin-left: 10px;">حذف درس❌</a>
+            </li>
         {% empty %}
             <li>درسی ثبت نشده🗿🍃</li>
         {% endfor %}
