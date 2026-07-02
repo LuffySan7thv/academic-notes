@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>نتایج جستجوی درس‌ها</title>
+</head>
+<body>
+    <h2>نتایج جستجوی درس‌ها برای "{{ query }}"</h2>
+    <ul>
+        {% for course in courses %}
+            <li>
+                <a href="{% url 'note_list' course.id %}">{{ course.name }}</a>
+                {% if course.description %}
+                    - {{ course.description }}
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>هیچ درسی پیدا نشد.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'course_list' %}">بازگشت به لیست درس‌ها</a>
+</body>
+</html>

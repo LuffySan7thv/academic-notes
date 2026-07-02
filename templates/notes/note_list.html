@@ -7,6 +7,11 @@
 </head>
 <body>
     <h1>جزوه های🧾🌼{{course.name}}</h1>
+    <form method="get" action="{% url 'search_notes' course.id %}">
+        <input type="text" name="q" placeholder="جستوجو در جزوه های این درس🧾🔍">
+        <button type="submit">جستوجو🔍🧐</button>
+    </form>
+
     <ul>
         {% for note in notes %}
             <li>
@@ -27,6 +32,6 @@
     <a href="{% url 'note_create' course.id %}">افزودن جزوه جدید➕📚</a>
     {% endif %}
     <br>
-    <a href="/">بازگشت به لیست درسها➡️</a>
+    <a href="{% url 'course_list' %}">بازگشت به لیست درسها➡️</a>
 </body>
 </html>

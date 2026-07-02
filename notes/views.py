@@ -3,6 +3,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from .models import Course, Note
 from .forms import RegisterForm, CourseForm, NoteForm
+from django.db.models import Q
 
 
 def course_list(request):
@@ -72,3 +73,29 @@ def note_delete(request, note_id):
         return redirect('note_list', course_id=course_id)
     except Note.DoesNotExist:
         return redirect('course_list')
+    
+
+@login_required
+def search_notes(request, course_id):
+    course = get_object_or_404(Course, id=course_id,user=request.user)
+    query = request.GET.get('q')
+    if query:
+        notes = course.note_set.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query)
+        )
+    else:
+        notes = Note.objects.none()
+    return render(request, 'notes/search_results.html', {'notes': notes, 'query':query})
+
+@login_required
+def search_courses(request):
+    query = request.GET.get('q','').strip()
+    if query:
+        courses = Course.objects.filter(
+            user=request.user,
+            name__icontains=query
+        )
+    else:
+        courses = Course.objects.none()
+    return render(request, 'notes/search_courses.html', {'courses': courses, 'query': query})

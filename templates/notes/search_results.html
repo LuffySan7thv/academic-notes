@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نتایج جست و جو</title>
+</head>
+<body>
+    <h2>نتایج جستوجو"{{ query }}"</h2>
+    <ul>
+        {% for note in notes %}
+            <li>
+                <a href="{% url 'note_list' note.course.id %}">{{ note.title }}</a>
+                - {{ note.course.name }}
+            </li>
+        {% empty %}
+            <li>هیچ جزوه ای پیدا نشد🧐</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'course_list' %}">بازگشت به لیست درسها➡️📚✨</a>
+</body>
+</html>

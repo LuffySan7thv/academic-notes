@@ -18,6 +18,11 @@
 
     <h1>🧾لیست دروس من📚</h1>
 
+    <form method="get" action="{% url 'search_courses' %}">
+        <input type="text" name="q" placeholder="جستوجو درسها🧾🔍">
+        <button type="submit">جستوجو🔍🧐</button>
+    </form>
+
     {% if user.is_authenticated %}
         <a href="{% url 'course_create' %}">افزودن درس جدید➕📚</a>
     {% endif %}
