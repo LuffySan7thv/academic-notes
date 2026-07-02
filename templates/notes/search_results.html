@@ -10,8 +10,13 @@
     <ul>
         {% for note in notes %}
             <li>
-                <a href="{% url 'note_list' note.course.id %}">{{ note.title }}</a>
-                - {{ note.course.name }}
+                <strong>{{ note.title }}</strong>
+                {% if note.file %}
+                    - <a href="{{ note.file.url }}" target="_blank">مشاهده فایل🎉</a>
+                    (<a href="{{note.file.uel }}" download>دانلود⬇️</a>)
+                {% endif %}
+                <br>
+                <small>درس: {{ note.course.name }}</small>
             </li>
         {% empty %}
             <li>هیچ جزوه ای پیدا نشد🧐</li>
