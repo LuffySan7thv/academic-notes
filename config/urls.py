@@ -14,7 +14,11 @@ urlpatterns = [
     path('', course_list, name='course_list'),
     path('course/<int:course_id>/', note_list, name='note_list'),
     path('register/', register, name='register'),
-    path('login/', LoginView.as_view(template_name='notes/login.html', authentication_form=CustomLoginForm), name='login'),
+    path('login/', LoginView.as_view(
+        template_name='notes/login.html',
+        redirect_authenticated_user=True,
+        next_page='/'
+    ), name='login'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
     path('course/<int:course_id>/note/create/', note_create, name='note_create'),
     path('course/create/', course_create, name='course_create'),

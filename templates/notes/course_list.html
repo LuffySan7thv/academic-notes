@@ -9,7 +9,10 @@
     <div>
         {% if user.is_authenticated %}
             <span>خوش اومدید🤗🎉✨{{ user.username }}</span>
-            <a href="{% url 'logout' %}">خروج</a>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">خروج</button>
+            </form>
         {% else %}
             <a href="{% url 'login' %}">ورود</a> |
             <a href="{% url 'register' %}">ثبت نام✨🎉</a>
