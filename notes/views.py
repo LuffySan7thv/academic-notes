@@ -6,6 +6,7 @@ from .forms import RegisterForm, CourseForm, NoteForm
 from django.db.models import Q
 
 
+@login_required
 def course_list(request):
     courses = Course.objects.filter(user=request.user)
     return render(request, 'notes/course_list.html', {'courses': courses})
