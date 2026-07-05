@@ -21,6 +21,9 @@
                 {% if note.file %}
                     - <a href="{{ note.file.url }}" target="_blank">✨مشاهده فایل</a>
                 {% endif %}
+                {% if request.user == profile_user %}
+                    <a href="{% url 'note_delete' note.id %}" style="color: red;">❌ حذف</a>
+                {% endif %}
             </li>
         {% empty %}
             <li>هیچ جزوه‌ای منتشر نشده است.</li>

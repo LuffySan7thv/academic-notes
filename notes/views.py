@@ -10,7 +10,8 @@ from django.contrib.auth.models import User
 @login_required
 def course_list(request):
     courses = Course.objects.filter(user=request.user)
-    return render(request, 'notes/course_list.html', {'courses': courses})
+    public_users = User.objects.filter(course__note__is_public=True).distinct()
+    return render(request, 'notes/course_list.html', {'courses': courses, 'public_users':public_users})
 
 def note_list(request, course_id):
     course = get_object_or_404(Course, id=course_id, user=request.user)
@@ -127,7 +128,7 @@ def dashboard(request):
 
 def public_profile(request, username):
     user = get_object_or_404(User, username=username)
-    notes = Note.objects.filter(course__user=user)
+    notes = Note.objects.filter(course__user=user, is_public=True)
     context = {
         'profile_user': user,
         'notes': notes,

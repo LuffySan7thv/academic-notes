@@ -22,6 +22,7 @@ class Note(models.Model):
         content = models.TextField(blank=True, null=True)
         file = models.FileField(upload_to='notes/files/', blank=True, null=True)
         tag = models.CharField(max_length=20, choices=TAG_CHOICES, default='lecture')
+        is_public = models.BooleanField(default=False)
         created_at = models.DateTimeField(auto_now_add=True)
 
         def __str__(self):
