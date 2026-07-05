@@ -6,7 +6,17 @@
     <title>جزوه های{{ course.name }}</title>
 </head>
 <body>
+
     <h1>جزوه های🧾🌼{{course.name}}</h1>
+
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px;">
+        <a href="?tag=">همه</a>
+        <a href="?tag=exam">📝 امتحان</a>
+        <a href="?tag=exercise">✏️ تمرین</a>
+        <a href="?tag=project">📁 پروژه</a>
+        <a href="?tag=lecture">📖 جزوه</a>
+    </div>
+
     <form method="get" action="{% url 'search_notes' course.id %}">
         <input type="text" name="q" placeholder="جستوجو در جزوه های این درس🧾🔍">
         <button type="submit">جستوجو🔍🧐</button>
@@ -16,6 +26,7 @@
         {% for note in notes %}
             <li>
                 {{note.title}}
+                <span style="color: #888; font-size: 14px;">({{ note.get_tag_display }})</span>
                 {% if note.file %}
                     - <a href="{{ note.file.url }}" target="_blank">مشاهده فایل🤗</a>
                     (<a href="{{ note.file.url }}" download>دانلود⬇️</a>)

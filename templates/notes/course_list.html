@@ -45,7 +45,7 @@
             </form>
         {% else %}
             <a href="{% url 'login' %}">✨🤗ورود</a> |
-            <a href="{% url 'register' %}">🎉✨ثبت‌نام</a>
+            <a href="{% url 'register' %}">🎉✨ثبت‌ نام</a>
         {% endif %}
     </div>
 
@@ -67,10 +67,12 @@
                     <span class="course-name toggle" data-course-id="{{ course.id }}">
                         <span class="toggle-icon">▶</span> {{ course.name }}
                     </span>
+                    <a href="{% url 'note_list' course.id %}" style="margin-right: 15px; font-size: 14px; color: #25cdeb;">مشاهده ی جزوه ها🧾🌼</a>
                     <ul class="notes" id="notes-{{ course.id }}">
                         {% for note in course.note_set.all %}
                             <li>
                                 {{ note.title }}
+                                <span style="color: #888; font-size: 14px;">({{ note.get_tag_display }})</span>
                                 {% if note.file %}
                                     - <a href="{{ note.file.url }}" target="_blank">✨ مشاهده فایل</a>
                                     (<a href="{{ note.file.url }}" download>⬇️ دانلود</a>)

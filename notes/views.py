@@ -13,8 +13,12 @@ def course_list(request):
 
 def note_list(request, course_id):
     course = get_object_or_404(Course, id=course_id, user=request.user)
-    notes = course.note_set.all()
-    return render(request, 'notes/note_list.html', {'course': course, 'notes': notes})
+    tag = request.GET.get('tag')
+    if tag:
+        notes = course.note_set.filter(tag=tag)
+    else:
+        notes = course.note_set.all()
+    return render(request, 'notes/note_list.html', {'course': course, 'notes': notes, 'selected_tag': tag})
 
 def register(request):
     if request.method == 'POST':
