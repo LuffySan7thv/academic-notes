@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>پروفایل {{ profile_user.username }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <h1>👤 پروفایل {{ profile_user.username }}</h1>
+    <p>تعداد جزوه‌ها: {{ notes.count }}</p>
+
+    <h2>📄 جزوه‌های {{ profile_user.username }}</h2>
+    <ul>
+        {% for note in notes %}
+            <li>
+                <strong>{{ note.title }}</strong>
+                - {{ note.course.name }}
+                <span style="color: #888; font-size: 14px;">({{ note.get_tag_display }})</span>
+                {% if note.file %}
+                    - <a href="{{ note.file.url }}" target="_blank">✨مشاهده فایل</a>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>هیچ جزوه‌ای منتشر نشده است.</li>
+        {% endfor %}
+    </ul>
+
+    <br>
+    <a href="{% url 'course_list' %}">🔙 بازگشت به لیست درس‌ها</a>
+
+</body>
+</html>

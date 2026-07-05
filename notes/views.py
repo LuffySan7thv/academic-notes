@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Course, Note
 from .forms import RegisterForm, CourseForm, NoteForm
 from django.db.models import Q
+from django.contrib.auth.models import User
 
 
 @login_required
@@ -121,3 +122,14 @@ def dashboard(request):
         'recent_notes': recent_notes,
     }
     return render(request, 'notes/dashboard.html', context)
+
+
+
+def public_profile(request, username):
+    user = get_object_or_404(User, username=username)
+    notes = Note.objects.filter(course__user=user)
+    context = {
+        'profile_user': user,
+        'notes': notes,
+    }
+    return render(request, 'notes/public_profile.html', context)

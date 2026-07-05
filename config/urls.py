@@ -6,7 +6,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from notes.views import (
     course_list, note_list, register, note_create, course_create,
-    course_delete, note_delete, search_notes,search_courses,dashboard
+    course_delete, note_delete, search_notes,search_courses,dashboard,public_profile
 )
 
 urlpatterns = [
@@ -27,6 +27,7 @@ urlpatterns = [
     path('search/courses/', search_courses, name='search_courses'),
     path('search/notes/<int:course_id>/',search_notes, name='search_notes'),
     path('dashboard/', dashboard, name='dashboard'),
+    path('profile/<str:username>/', public_profile, name='public_profile'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
