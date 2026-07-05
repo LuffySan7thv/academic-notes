@@ -100,3 +100,20 @@ def search_courses(request):
     else:
         courses = Course.objects.none()
     return render(request, 'notes/search_courses.html', {'courses': courses, 'query': query})
+
+
+@login_required
+def dashboard(request):
+    user = request.user
+    courses = Course.objects.filter(user=user)
+    total_courses = courses.count()
+    total_notes = Note.objects.filter(course__user=user).count()
+    recent_notes = Note.objects.filter(course__user=user).order_by('-created_at')[:5]
+
+    context = {
+        'user': user,
+        'total_courses': total_courses,
+        'total_notes': total_notes,
+        'recent_notes': recent_notes,
+    }
+    return render(request, 'notes/dashboard.html', context)
