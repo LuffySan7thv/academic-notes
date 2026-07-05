@@ -134,3 +134,31 @@ def public_profile(request, username):
         'notes': notes,
     }
     return render(request, 'notes/public_profile.html', context)
+
+
+def public_notes_list(request):
+    tag = request.GET.get('tag')
+    query = request.GET.get('q')
+    notes = Note.objects.filter(is_public=True)
+    if tag:
+        notes = notes.filter(tag=tag)
+    if query:
+        notes = notes.filter(
+            Q(title__icontains=query) |
+            Q(course__name__icontains=query)
+        )
+    return render(request, 'notes/public_notes_list.html', {'notes': notes})
+
+
+def public_note_create(request):
+    if request.method == 'POST':
+        form = NoteForm(request.POST, request.FILES)
+        if form.is_valid():
+            note = form.save(commit=False)
+            note.course = get_object_or_404(Course, id=request.POST.get('course'))
+            note.save()
+            return redirect('public_profile', username=request.user.username)
+    else:
+        form = NoteForm()
+    courses = Course.objects.filter(user=request.user)
+    return render(request, 'notes/public_note_create.html', {'form': form, 'courses': courses})

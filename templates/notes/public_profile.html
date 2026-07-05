@@ -11,6 +11,10 @@
     <h1>👤 پروفایل {{ profile_user.username }}</h1>
     <p>تعداد جزوه‌ها: {{ notes.count }}</p>
 
+    {% if request.user == profile_user %}
+        <a href="{% url 'public_note_create' %}">➕🧾 افزودن جزوه عمومی</a>
+    {% endif %}
+
     <h2>📄 جزوه‌های {{ profile_user.username }}</h2>
     <ul>
         {% for note in notes %}

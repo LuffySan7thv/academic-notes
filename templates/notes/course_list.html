@@ -98,9 +98,12 @@
         {% for user in public_users %}
             <li><a href="{% url 'public_profile' user.username %}">{{ user.username }}</a></li>
         {% empty %}
-            <li>هیچ کاربری جزوه‌ای عمومی منتشر نکرده است.</li>
+            <li>هیچ کاربری جزوه‌ای عمومی منتشر نکرده است🧐🕸️🍃</li>
         {% endfor %}
     </ul>
+
+    <br>
+    <a href="{% url 'public_notes_list' %}">🌐🌼✨ مشاهده جزوه‌های عمومی</a>
 
     <script>
         document.querySelectorAll('.toggle').forEach(function(el) {
