@@ -10,8 +10,11 @@
 
     <div>
         <span>خوش آمدید {{ user.username }}</span>
-        <a href="{% url 'logout' %}">⏩🌼 خروج</a>
         <a href="{% url 'course_list' %}">📚 لیست درس‌ها</a>
+        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" style="background: none; border: none; color: #dc2626; cursor: pointer;">🚪 خروج</button>
+        </form>
     </div>
 
     <h1> 🎉🌼داشبورد کاربری</h1>
