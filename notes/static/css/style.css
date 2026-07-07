@@ -1,29 +1,184 @@
+/* تنظیمات کلی */
+* {
+    box-sizing: border-box;
+    font-family: Tahoma, Arial, sans-serif;
+}
 
 body {
-    background-color: #f0f2f5; 
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* وسط‌چین کردن محتوا */
-    justify-content: center;
-    height: 100vh; 
+    direction: rtl;
+    background: #e5e7eb;
+    color: #1f2937;
     margin: 0;
+    padding: 30px;
 }
 
-/* استایل دادن به تیتر اصلی */
-h1 {
-    color: #1a73e8; 
-    font-size: 3rem;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1); /* سایه زیر متن */
+
+/* عنوان‌ها */
+h1, h2 {
+    text-align: center;
+    color: #1e40af;
+    margin-bottom: 25px;
 }
 
-/* استایل دادن به متن زیر تیتر */
-p {
-    color: #5f6368; 
-    font-size: 1.2rem;
+
+/* لینک‌ها */
+a {
+    color: #1d4ed8;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+/* فرم‌ها */
+form {
     background: white;
-    padding: 15px 30px;
-    border-radius: 50px; 
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+    width: 400px;
+    max-width: 90%;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+
+form p {
+    margin-bottom: 15px;
+}
+
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #374151;
+}
+
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #9ca3af;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #1d4ed8;
+}
+
+
+/* دکمه‌ها */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #1e40af;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #1e3a8a;
+}
+/* نوار بالای صفحات */
+body > div:first-child {
+    background: #1e40af;
+    color: white;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+
+body > div:first-child a {
+    color: white;
+    margin-right: 15px;
+}
+
+
+/* داشبورد */
+body > div[style*="display: flex"] {
+    max-width: 800px;
+    margin: auto;
+}
+
+
+body > div[style*="background"] {
+    box-shadow: 0 5px 15px rgba(0,0,0,.1);
+}
+
+
+/* لیست‌ها */
+ul {
+    background: white;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 12px;
+    list-style: none;
+}
+
+
+li {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+
+li:last-child {
+    border-bottom: none;
+}
+
+
+/* بخش درس‌ها */
+.tree {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    max-width: 900px;
+    margin: auto;
+}
+
+
+/* دکمه بازگشت */
+body > a {
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+    background: #1e40af;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+}
+
+
+body > a:hover {
+    background: #1e3a8a;
+    text-decoration: none;
+}
+
+
+/* موبایل */
+@media(max-width:600px){
+
+    body {
+        padding:15px;
+    }
+
+    form {
+        width:100%;
+    }
+
 }
