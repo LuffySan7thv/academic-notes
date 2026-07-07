@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>افزودن جزوه به پروفایل عمومی</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <h1>➕ افزودن جزوه به پروفایل عمومی</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="course">درس مورد نظر:</label>
+        <select name="course" id="course" required>
+            <option value=""> انتخاب درس</option>
+            {% for course in courses %}
+                <option value="{{ course.id }}">{{ course.name }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        {{ form.as_p }}
+        <button type="submit">📩ذخیره</button>
+    </form>
+
+    <br>
+    <a href="{% url 'public_profile' user.username %}">🔙 بازگشت به پروفایل عمومی</a>
+
+</body>
+</html>

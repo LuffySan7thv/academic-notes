@@ -12,6 +12,10 @@
     <h1>👤 پروفایل {{ profile_user.username }}</h1>
     <p>تعداد جزوه‌ها: {{ notes.count }}</p>
 
+    {% if request.user == profile_user %}
+        <a href="{% url 'public_note_create' %}">➕🧾 افزودن جزوه عمومی</a>
+    {% endif %}
+
     <h2>📄 جزوه‌های {{ profile_user.username }}</h2>
     <ul>
         {% for note in notes %}
@@ -21,6 +25,9 @@
                 <span style="color: #888; font-size: 14px;">({{ note.get_tag_display }})</span>
                 {% if note.file %}
                     - <a href="{{ note.file.url }}" target="_blank">✨مشاهده فایل</a>
+                {% endif %}
+                {% if request.user == profile_user %}
+                    <a href="{% url 'note_delete' note.id %}" style="color: red;">❌ حذف</a>
                 {% endif %}
             </li>
         {% empty %}

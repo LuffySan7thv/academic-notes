@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
-from .models import Course, Note
+from .models import Course, Note,Rating
 from .forms import RegisterForm, CourseForm, NoteForm
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -10,7 +10,8 @@ from django.contrib.auth.models import User
 @login_required
 def course_list(request):
     courses = Course.objects.filter(user=request.user)
-    return render(request, 'notes/course_list.html', {'courses': courses})
+    public_users = User.objects.filter(course__note__is_public=True).distinct()
+    return render(request, 'notes/course_list.html', {'courses': courses, 'public_users':public_users})
 
 def note_list(request, course_id):
     course = get_object_or_404(Course, id=course_id, user=request.user)
@@ -127,9 +128,53 @@ def dashboard(request):
 
 def public_profile(request, username):
     user = get_object_or_404(User, username=username)
-    notes = Note.objects.filter(course__user=user)
+    notes = Note.objects.filter(course__user=user, is_public=True)
     context = {
         'profile_user': user,
         'notes': notes,
     }
     return render(request, 'notes/public_profile.html', context)
+
+
+def public_notes_list(request):
+    tag = request.GET.get('tag')
+    query = request.GET.get('q')
+    notes = Note.objects.filter(is_public=True)
+    if tag:
+        notes = notes.filter(tag=tag)
+    if query:
+        notes = notes.filter(
+            Q(title__icontains=query) |
+            Q(course__name__icontains=query)
+        )
+    return render(request, 'notes/public_notes_list.html', {'notes': notes})
+
+
+def public_note_create(request):
+    if request.method == 'POST':
+        form = NoteForm(request.POST, request.FILES)
+        if form.is_valid():
+            note = form.save(commit=False)
+            note.course = get_object_or_404(Course, id=request.POST.get('course'))
+            note.save()
+            return redirect('public_profile', username=request.user.username)
+    else:
+        form = NoteForm()
+    courses = Course.objects.filter(user=request.user)
+    return render(request, 'notes/public_note_create.html', {'form': form, 'courses': courses})
+
+
+@login_required
+def rate_note(request, note_id):
+    note = get_object_or_404(Note, id=note_id)
+    if request.method == 'POST':
+        score = request.POST.get('score')
+        if score:
+            score = int(score)
+            if 1 <= score <= 5:
+                rating, created = Rating.objects.get_or_create(note=note, user=request.user, defaults={'score': score})
+                if not created:
+                    rating.score = score
+                    rating.save()
+    return redirect(request.META.get('HTTP_REFERER', 'public_notes_list'))
+
