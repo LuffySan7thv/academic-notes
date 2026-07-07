@@ -198,3 +198,11 @@ def delete_comment(request, comment_id):
     if comment.user == request.user:
         comment.delete()
     return redirect(request.META.get('HTTP_REFERER', 'public_notes_list'))
+
+@login_required
+def purchase_note(request, note_id):
+    note = get_object_or_404(Note, id=note_id)
+    if request.method == 'POST':
+        
+        return render(request, 'notes/purchase_success.html', {'note': note})
+    return render(request, 'notes/purchase.html', {'note': note})

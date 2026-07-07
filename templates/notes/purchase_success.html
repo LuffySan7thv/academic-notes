@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>خرید موفق</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>✅ خرید با موفقیت انجام شد!</h1>
+    <p>جزوه <strong>{{ note.title }}</strong> برای شما فعال شد.</p>
+    <a href="{{ note.file.url }}" download>📥 دانلود جزوه</a>
+    <br><br>
+    <a href="{% url 'public_notes_list' %}">🔙 بازگشت به جزوه‌های عمومی</a>
+</body>
+</html>

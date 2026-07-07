@@ -33,7 +33,13 @@
                 - {{ note.course.name }}
                 <span style="color: #888; font-size: 14px;">({{ note.get_tag_display }})</span>
                 {% if note.file %}
-                    - <a href="{{ note.file.url }}" target="_blank">✨ مشاهده فایل</a>
+                    {% if note.price_type == 'free' %}
+                         - <a href="{{ note.file.url }}" download>📥 دانلود رایگان</a>
+                    {% else %}
+                        - <a href="{% url 'purchase_note' note.id %}">🛒 خرید جزوه</a>
+                    {% endif %}
+                {% else %}
+                    <span style="color: #888;">(بدون فایل)</span>
                 {% endif %}
                 <span style="color: #555; font-size: 14px;">توسط: <a href="{% url 'public_profile' note.course.user.username %}">{{ note.course.user.username }}</a></span>
 
