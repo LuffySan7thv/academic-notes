@@ -7,7 +7,7 @@ from django.conf.urls.static import static
 from notes.views import (
     course_list, note_list, register, note_create, course_create,
     course_delete, note_delete, search_notes,search_courses,dashboard,public_profile,
-    public_notes_list,public_note_create,rate_note
+    public_notes_list,public_note_create,rate_note,add_comment,delete_comment
 )
 
 urlpatterns = [
@@ -32,6 +32,8 @@ urlpatterns = [
     path('public/notes/', public_notes_list, name='public_notes_list'),
     path('public/note/create/', public_note_create, name='public_note_create'),
     path('rate/<int:note_id>/', rate_note, name='rate_note'),
+    path('comment/<int:note_id>/', add_comment, name='add_comment'),
+    path('comment/delete/<int:comment_id>/', delete_comment, name='delete_comment'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
