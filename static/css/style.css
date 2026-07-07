@@ -9,7 +9,7 @@ body {
     background: #e5e7eb;
     color: #1f2937;
     margin: 0;
-    padding: 30px;
+    padding: 2rem;
 }
 
 
@@ -36,17 +36,17 @@ a:hover {
 /* فرم‌ها */
 form {
     background: white;
-    width: 400px;
-    max-width: 90%;
-    margin: 30px auto;
-    padding: 30px;
+    width: 90%;
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
     border-radius: 15px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 
 form p {
-    margin-bottom: 15px;
+    margin-bottom: 1rem;
 }
 
 
@@ -62,10 +62,10 @@ input,
 select,
 textarea {
     width: 100%;
-    padding: 12px;
+    padding: 0.75rem;
     border: 1px solid #9ca3af;
     border-radius: 8px;
-    font-size: 15px;
+    font-size: 1rem;
 }
 
 
@@ -80,7 +80,7 @@ textarea:focus {
 /* دکمه‌ها */
 button {
     width: 100%;
-    padding: 12px;
+    padding: 0.75rem;
     background: #1e40af;
     color: white;
     border: none;
@@ -96,9 +96,9 @@ button:hover {
 body > div:first-child {
     background: #1e40af;
     color: white;
-    padding: 15px;
+    padding: 1rem;
     border-radius: 12px;
-    margin-bottom: 25px;
+    margin-bottom: 1.5rem;
 }
 
 
@@ -123,16 +123,17 @@ body > div[style*="background"] {
 /* لیست‌ها */
 ul {
     background: white;
+    width: 90%;
     max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
+    margin: 1.5rem auto;
+    padding: 1.2rem;
     border-radius: 12px;
     list-style: none;
 }
 
 
 li {
-    padding: 12px;
+    padding: 0.75rem;
     border-bottom: 1px solid #ddd;
 }
 
@@ -145,7 +146,8 @@ li:last-child {
 /* بخش درس‌ها */
 .tree {
     background: white;
-    padding: 25px;
+    width: 90%;
+    padding: 1.5rem;
     border-radius: 15px;
     max-width: 900px;
     margin: auto;
@@ -156,10 +158,12 @@ li:last-child {
 body > a {
     display: block;
     width: fit-content;
-    margin: 20px auto;
+    max-width: 90%;
+    text-align: center;
+    margin: 1.5rem auto;
     background: #1e40af;
     color: white;
-    padding: 12px 20px;
+    padding: 0.75rem 1.25rem;
     border-radius: 8px;
 }
 
@@ -171,14 +175,85 @@ body > a:hover {
 
 
 /* موبایل */
-@media(max-width:600px){
+/* تنظیمات موبایل و تبلت */
+@media (max-width: 768px) {
 
     body {
-        padding:15px;
+        padding: 1rem;
     }
 
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+
+    /* فرم‌ها */
     form {
-        width:100%;
+        width: 100%;
+        max-width: 100%;
+        padding: 1.2rem;
+    }
+
+
+    input,
+    select,
+    textarea {
+        font-size: 16px;
+    }
+
+
+    button {
+        width: 100%;
+    }
+
+
+    /* نوار بالا */
+    body > div:first-child {
+        text-align: center;
+    }
+
+
+    body > div:first-child a {
+        display: block;
+        margin: 10px 0;
+    }
+
+
+    /* کارت‌های داشبورد */
+    body > div[style*="display: flex"] {
+        flex-direction: column;
+    }
+
+
+    /* لیست‌ها */
+    ul {
+        width: 100%;
+        padding: 1rem;
+    }
+
+
+    li {
+        font-size: 0.95rem;
+        overflow-wrap: break-word;
+    }
+
+
+    /* بخش درس‌ها */
+    .tree {
+        width: 100%;
+        padding: 1rem;
+    }
+
+
+    /* لینک‌ها */
+    body > a {
+        width: 90%;
     }
 
 }
