@@ -33,14 +33,28 @@
                 - {{ note.course.name }}
                 <span style="color: #888; font-size: 14px;">({{ note.get_tag_display }})</span>
                 {% if note.file %}
-                    - <a href="{{ note.file.url }}" target="_blank">✨ مشاهده فایل</a>
+                    {% if note.price_type == 'free' %}
+                         - <a href="{{ note.file.url }}" download>📥 دانلود رایگان</a>
+                    {% else %}
+                        - <a href="{% url 'purchase_note' note.id %}">🛒 خرید جزوه</a>
+                    {% endif %}
+                {% else %}
+                    <span style="color: #888;">(بدون فایل)</span>
                 {% endif %}
                 <span style="color: #555; font-size: 14px;">توسط: <a href="{% url 'public_profile' note.course.user.username %}">{{ note.course.user.username }}</a></span>
+
+                <span style="margin-left: 10px;">
+                    ⭐ میانگین: 
+                    {% if note.ratings.exists %}
+                        {{ note.ratings.all|dictsort:"score"|length }}
+                    {% else %}
+                        هنوز امتیازی ثبت نشده
+                    {% endif %}
+                </span>
 
                 <form method="post" action="{% url 'rate_note' note.id %}" style="display: inline;">
                     {% csrf_token %}
                     <select name="score" onchange="this.form.submit()">
-                        <option value="">⭐امتیاز</option>
                         <option value="1">⭐</option>
                         <option value="2">⭐⭐</option>
                         <option value="3">⭐⭐⭐</option>
@@ -49,7 +63,32 @@
                     </select>
                 </form>
 
-                <span>⭐ {{ note.ratings.all|length }}</span>
+                <span> امتیازشما: {{ note.ratings.all|length }}</span>
+
+
+                <details>
+                    <summary>💬 کامنت‌ها ({{ note.comments.count }})</summary>
+                    {% if note.comments.all %}
+                        <ul>
+                            {% for comment in note.comments.all %}
+                                <li>
+                                    <strong>{{ comment.user.username }}</strong>: {{ comment.text }}
+                                    <span style="color: #888; font-size: 12px;">({{ comment.created_at|date:"Y/m/d H:i" }})</span>
+                                    {% if comment.user == request.user %}
+                                        <a href="{% url 'delete_comment' comment.id %}" style="color: red; margin-left: 10px;">🗑️</a>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>هیچ کامنتی ثبت نشده است.</p>
+                    {% endif %}
+                    <form method="post" action="{% url 'add_comment' note.id %}">
+                        {% csrf_token %}
+                        <input type="text" name="text" placeholder="کامنت خود را وارد کنید..." required>
+                        <button type="submit">ارسال</button>
+                    </form>
+                </details>
             </li>
         {% empty %}
             <li>هیچ جزوه‌ای منتشر نشده است🍃🕸️</li>

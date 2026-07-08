@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
-from .models import Course, Note,Rating
+from .models import Course, Note,Rating,Comment
 from .forms import RegisterForm, CourseForm, NoteForm
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -172,9 +172,37 @@ def rate_note(request, note_id):
         if score:
             score = int(score)
             if 1 <= score <= 5:
-                rating, created = Rating.objects.get_or_create(note=note, user=request.user, defaults={'score': score})
+                rating, created = Rating.objects.get_or_create(
+                    note=note,
+                    user=request.user,
+                    defaults={'score': score}
+                )
                 if not created:
                     rating.score = score
                     rating.save()
     return redirect(request.META.get('HTTP_REFERER', 'public_notes_list'))
 
+@login_required
+def add_comment(request, note_id):
+    note = get_object_or_404(Note, id=note_id)
+    if request.method == 'POST':
+        text = request.POST.get('text')
+        if text:
+            Comment.objects.create(note=note, user=request.user, text=text)
+    return redirect(request.META.get('HTTP_REFERER', 'public_notes_list'))
+
+
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    if comment.user == request.user:
+        comment.delete()
+    return redirect(request.META.get('HTTP_REFERER', 'public_notes_list'))
+
+@login_required
+def purchase_note(request, note_id):
+    note = get_object_or_404(Note, id=note_id)
+    if request.method == 'POST':
+        
+        return render(request, 'notes/purchase_success.html', {'note': note})
+    return render(request, 'notes/purchase.html', {'note': note})

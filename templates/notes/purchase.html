@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>خرید جزوه</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>🛒 خرید جزوه: {{ note.title }}</h1>
+    <p>قیمت: ۵,۰۰۰ تومان</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">تأیید خرید</button>
+    </form>
+    <br>
+    <a href="{% url 'public_notes_list' %}">🔙 بازگشت به جزوه‌های عمومی</a>
+</body>
+</html>
