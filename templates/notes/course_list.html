@@ -43,7 +43,7 @@
             <a href="{% url 'dashboard' %}">داشبورد✨🌼</a>
             <form method="post" action="{% url 'logout' %}" style="display: inline;">
                 {% csrf_token %}
-                <button type="submit" style="background: none;border: none;color: rgb(216, 230, 240);cursor: pointer;">⏩✨خروج</button>
+                <button type="submit" style="background: none;border: none;color: rgb(216, 230, 240);cursor: pointer;">⏩✨ خروج از حساب</button>
             </form>
         {% else %}
             <a href="{% url 'login' %}">✨🤗ورود</a> |
