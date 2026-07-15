@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>خطا</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div style="text-align: center; margin-top: 50px; padding: 20px; border: 1px solid #dc3545; border-radius: 10px; background-color: #f8d7da; max-width: 600px; margin-left: auto; margin-right: auto;">
+        <h1 style="color: #721c24;">❌ خطا</h1>
+        <p style="color: #721c24; font-size: 18px;">{{ error }}</p>
+        <br>
+        <a href="{% url 'course_list' %}" style="color: #007bff; text-decoration: none;">🔙 بازگشت به صفحه اصلی</a>
+    </div>
+</body>
+</html>

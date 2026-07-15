@@ -52,7 +52,7 @@ def course_delete(request, course_id):
         course = get_object_or_404(Course,id=course_id, user=request.user)
         course.delete()
     except Course.DoesNotExist:
-        pass
+        return render(request, 'notes/error.html', {'error':'درس مورد نظر یافت نشد'})
     return redirect('course_list')
 
 @login_required
@@ -61,9 +61,12 @@ def note_create(request, course_id):
     if request.method == 'POST':
         form = NoteForm(request.POST, request.FILES)
         if form.is_valid():
-            note = form.save(commit=False)
-            note.course = course
-            note.save()
+            try:
+                note = form.save(commit=False)
+                note.course = course
+                note.save()
+            except Exception as e:
+                return render(request, 'notes/error.html', {'error': 'مشکل در اپلود فایل:' + str(e)})
             return redirect('note_list', course_id=course.id)
     else:
         form = NoteForm()
@@ -79,7 +82,8 @@ def note_delete(request, note_id):
             note.delete()
         return redirect('note_list', course_id=course_id)
     except Note.DoesNotExist:
-        return redirect('course_list')
+        return render(request, 'notes/error.html', {'error':'جزوه ی مورد نظر یافت نشد'})
+    return redirect('note_list',course_id=note.corse.id)
     
 
 @login_required
@@ -150,18 +154,24 @@ def public_notes_list(request):
     return render(request, 'notes/public_notes_list.html', {'notes': notes})
 
 
+@login_required
 def public_note_create(request):
     if request.method == 'POST':
         form = NoteForm(request.POST, request.FILES)
         if form.is_valid():
-            note = form.save(commit=False)
-            note.course = get_object_or_404(Course, id=request.POST.get('course'))
-            note.save()
+            try:
+                note = form.save(commit=False)
+                course_id = request.POST.get('course')
+                note.course = get_object_or_404(Course, id=course_id)
+                note.save()
+            except Exception as e:
+                return render(request, 'notes/error.html', {'error': 'مشکل در آپلود فایل: ' + str(e)})
             return redirect('public_profile', username=request.user.username)
     else:
         form = NoteForm()
     courses = Course.objects.filter(user=request.user)
     return render(request, 'notes/public_note_create.html', {'form': form, 'courses': courses})
+
 
 
 @login_required
@@ -170,16 +180,19 @@ def rate_note(request, note_id):
     if request.method == 'POST':
         score = request.POST.get('score')
         if score:
-            score = int(score)
-            if 1 <= score <= 5:
-                rating, created = Rating.objects.get_or_create(
-                    note=note,
-                    user=request.user,
-                    defaults={'score': score}
-                )
-                if not created:
-                    rating.score = score
-                    rating.save()
+            try:
+                score = int(score)
+                if 1 <= score <= 5:
+                    rating, created = Rating.objects.get_or_create(
+                        note=note,
+                        user=request.user,
+                        defaults={'score': score}
+                    )
+                    if not created:
+                        rating.score = score
+                        rating.save()
+            except Exception as e:
+                return render(request, 'notes/error.html', {'error': 'خطا در ثبت امتیاز:' + str(e)})
     return redirect(request.META.get('HTTP_REFERER', 'public_notes_list'))
 
 @login_required
@@ -188,7 +201,10 @@ def add_comment(request, note_id):
     if request.method == 'POST':
         text = request.POST.get('text')
         if text:
-            Comment.objects.create(note=note, user=request.user, text=text)
+            try:
+                Comment.objects.create(note=note, user=request.user, text=text)
+            except Exception as e:
+                return render(request, 'notes/error.html', {'error': 'مشکل در ثبت کامنت:' + str(e)})
     return redirect(request.META.get('HTTP_REFERER', 'public_notes_list'))
 
 
@@ -202,7 +218,10 @@ def delete_comment(request, comment_id):
 @login_required
 def purchase_note(request, note_id):
     note = get_object_or_404(Note, id=note_id)
+    try:
+        file_url = note.file.url
+    except ValueError:
+        return render(request, 'notes/error.html', {'error': 'فایل مورد نظر موجود نیس' })
     if request.method == 'POST':
-        
         return render(request, 'notes/purchase_success.html', {'note': note})
     return render(request, 'notes/purchase.html', {'note': note})
