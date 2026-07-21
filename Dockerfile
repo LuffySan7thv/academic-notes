@@ -2,12 +2,8 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-
-RUN pip config set global.index-url https://mirror.iranserver.com/pypi/web/simple && \
-    pip config set global.trusted-host mirror.iranserver.com
-
 COPY requirements.txt .
-RUN pip install --default-timeout=100 -r requirements.txt
+RUN pip install --default-timeout=100 --index-url https://pypi.org/simple --trusted-host pypi.org -r requirements.txt
 
 COPY . .
 
