@@ -7,7 +7,7 @@ RUN pip config set global.index-url https://mirror.iranserver.com/pypi/web/simpl
     pip config set global.trusted-host mirror.iranserver.com
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --default-timeout=100 -r requirements.txt
 
 COPY . .
 
