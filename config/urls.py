@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from django.contrib.auth.views import LoginView, LogoutView
 from notes.forms import CustomLoginForm
 from django.conf import settings
@@ -12,6 +12,7 @@ from notes.views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('markdownx/', include('markdownx.urls')),
     path('', course_list, name='course_list'),
     path('course/<int:course_id>/', note_list, name='note_list'),
     path('register/', register, name='register'),

@@ -29,6 +29,7 @@
             <li>
                 {{note.title}}
                 <span style="color: #888; font-size: 14px;">({{ note.get_tag_display }})</span>
+                <p>{{ note.content_html|safe }}</p>
                 {% if note.file %}
                     - <a href="{{ note.file.url }}" target="_blank">مشاهده فایل🤗</a>
                     (<a href="{{ note.file.url }}" download>دانلود⬇️</a>)

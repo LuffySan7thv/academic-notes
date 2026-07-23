@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Course,Note
 from django.contrib.auth.forms import AuthenticationForm
+from markdownx.fields import MarkdownxFormField
 
 
 class RegisterForm(UserCreationForm):
@@ -36,6 +37,8 @@ class CourseForm(forms.ModelForm):
         fields = ['name']
 
 class NoteForm(forms.ModelForm):
+    content = MarkdownxFormField()
+
     class Meta:
         model = Note
         fields = ['title', 'content', 'file', 'tag','is_public', 'price_type']

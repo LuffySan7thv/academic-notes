@@ -5,6 +5,7 @@ from .models import Course, Note,Rating,Comment
 from .forms import RegisterForm, CourseForm, NoteForm
 from django.db.models import Q
 from django.contrib.auth.models import User
+import markdown
 
 
 @login_required
@@ -20,6 +21,9 @@ def note_list(request, course_id):
         notes = course.note_set.filter(tag=tag)
     else:
         notes = course.note_set.all()
+
+    for note in notes:
+        note.content_html = markdown.markdown(note.content)
     return render(request, 'notes/note_list.html', {'course': course, 'notes': notes, 'selected_tag': tag})
 
 def register(request):
